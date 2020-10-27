@@ -85,3 +85,17 @@ resource "aws_cloudwatch_event_target" "ecs_scheduler_start" {
   arn       = aws_lambda_function.ecs_scheduler.arn
   input     = "{\"clusterName\":\"${var.cluster_name}\",\"serviceName\":\"${var.ecs_services[count.index]["service_name"]}\", \"desiredCount\":\"${var.ecs_services[count.index]["desired_count"]}\",\"AWSRegion\":\"${var.region}\",\"action\":\"start\"}"
 }
+
+resource "aws_cloudwatch_event_rule" "ecs_scheduler_stop" {
+  name        = "${module.ecs_scheduler_label.id}-stop"
+  description = "Start ECS tasks"
+  schedule_expression = var.cron_stop
+}
+
+resource "aws_cloudwatch_event_target" "ecs_scheduler_stop" {
+  count     = length(var.ecs_services)
+  rule      = aws_cloudwatch_event_rule.ecs_scheduler_stop.name
+  arn       = aws_lambda_function.ecs_scheduler.arn
+  input     = "{\"clusterName\":\"${var.cluster_name}\",\"serviceName\":\"${var.ecs_services[count.index]["service_name"]}\", \"desiredCount\":\"${var.ecs_services[count.index]["desired_count"]}\",\"AWSRegion\":\"${var.region}\",\"action\":\"stop\"}"
+}
+

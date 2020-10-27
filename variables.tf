@@ -30,13 +30,11 @@ variable "attributes" {
 
 variable "cron_start" {
   type        = string
-  default     = ""
   description = "Cloudwatch rule cron expression to start tasks"
 }
 
 variable "cron_stop" {
   type        = string
-  default     = ""
   description = "Cloudwatch rule cron expression to stop tasks"
 }
 
