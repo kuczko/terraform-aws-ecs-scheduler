@@ -4,7 +4,7 @@ Example usage:
 
 ```
 module "ecs-scheduler" {
-  source       = "https://github.com/kuczko/terraform-aws-ecs-scheduler.git?ref=0.1.0"
+  source       = "git::https://github.com/kuczko/terraform-aws-ecs-scheduler.git?ref=0.1.0"
   namespace    = var.project_name
   stage        = local.stage
   cluster_name = "my_cluster_name"
