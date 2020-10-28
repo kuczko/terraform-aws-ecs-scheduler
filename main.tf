@@ -83,7 +83,7 @@ resource "aws_cloudwatch_event_target" "ecs_scheduler_start" {
   count     = length(var.ecs_services)
   rule      = aws_cloudwatch_event_rule.ecs_scheduler_start.name
   arn       = aws_lambda_function.ecs_scheduler.arn
-  input     = "{\"clusterName\":\"${var.cluster_name}\",\"serviceName\":\"${var.ecs_services[count.index]["service_name"]}\", \"desiredCount\":\"${var.ecs_services[count.index]["desired_count"]}\",\"AWSRegion\":\"${var.region}\",\"action\":\"start\"}"
+  input     = "{\"clusterName\":\"${var.cluster_name}\",\"serviceName\":\"${var.ecs_services[count.index]["service_name"]}\", \"desiredCount\":${var.ecs_services[count.index]["desired_count"]},\"AWSRegion\":\"${var.region}\",\"action\":\"start\"}"
 }
 
 resource "aws_cloudwatch_event_rule" "ecs_scheduler_stop" {
@@ -96,6 +96,6 @@ resource "aws_cloudwatch_event_target" "ecs_scheduler_stop" {
   count     = length(var.ecs_services)
   rule      = aws_cloudwatch_event_rule.ecs_scheduler_stop.name
   arn       = aws_lambda_function.ecs_scheduler.arn
-  input     = "{\"clusterName\":\"${var.cluster_name}\",\"serviceName\":\"${var.ecs_services[count.index]["service_name"]}\", \"desiredCount\":\"${var.ecs_services[count.index]["desired_count"]}\",\"AWSRegion\":\"${var.region}\",\"action\":\"stop\"}"
+  input     = "{\"clusterName\":\"${var.cluster_name}\",\"serviceName\":\"${var.ecs_services[count.index]["service_name"]}\", \"desiredCount\":${var.ecs_services[count.index]["desired_count"]},\"AWSRegion\":\"${var.region}\",\"action\":\"stop\"}"
 }
 
