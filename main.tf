@@ -73,6 +73,22 @@ resource "aws_lambda_function" "ecs_scheduler" {
   description      = "Starts/stops ecs tasks once requested"
 }
 
+resource "aws_lambda_permission" "cloudwatch_start" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  principal     = "events.amazonaws.com"
+  function_name = aws_lambda_function.ecs_scheduler.function_name
+  source_arn    = aws_cloudwatch_event_rule.ecs_scheduler_start.arn
+}
+
+resource "aws_lambda_permission" "cloudwatch_stop" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  principal     = "events.amazonaws.com"
+  function_name = aws_lambda_function.ecs_scheduler.function_name
+  source_arn    = aws_cloudwatch_event_rule.ecs_scheduler_stop.arn
+}
+
 resource "aws_cloudwatch_event_rule" "ecs_scheduler_start" {
   name        = "${module.ecs_scheduler_label.id}-start"
   description = "Start ECS tasks"
