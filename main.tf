@@ -82,7 +82,7 @@ resource "aws_lambda_permission" "cloudwatch_start" {
 }
 
 resource "aws_lambda_permission" "cloudwatch_stop" {
-  statement_id  = "AllowExecutionFromCloudWatch"
+  statement_id  = "AllowExecutionFromCloudWatch2"
   action        = "lambda:InvokeFunction"
   principal     = "events.amazonaws.com"
   function_name = aws_lambda_function.ecs_scheduler.function_name
